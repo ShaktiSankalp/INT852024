@@ -1,3 +1,44 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Socket.io(html)---------------------------------
 // <!DOCTYPE html>
 // <html lang="en">
@@ -270,3 +311,201 @@
 // app.listen(port,()=>{
 //     console.log('server running on 3000');
 // })
+
+
+
+
+
+
+
+
+
+
+
+
+// mongodb(html)--------------
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//  <meta charset="UTF-8">
+//  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//  <title>User Management</title>
+// </head>
+// <body>
+//  <h1>Users</h1>
+//  <ul id="userList">
+//  <!-- I will be adding users here -->
+//  </ul>
+// <h2>Add User</h2>
+// <form id="addUserForm">
+//  <label for="name">Name:</label>
+//  <input type="text" id="name" name="name">
+//  <br>
+//  <label for="email">Email:</label>
+//  <input type="email" id="email" name="email">
+//  <br>
+//  <label for="password">Password:</label>
+//  <input type="password" id="password" name="password">
+//  <br>
+//  <button type="submit">Add User</button>
+//  </form>
+// <script>
+//  const fetchUsers = () => {
+//  fetch('/users')
+//  .then(response => {
+//  if (!response.ok) {
+//  throw new Error('Network response was not ok');
+//  }
+//  return response.json();
+// })
+//  .then(users => {
+//  const userList = document.getElementById('userList');
+// userList.innerHTML = ''; // Clear previous user list
+// users.forEach(user => {
+//  const li = document.createElement('li');
+//  li.textContent = `${user.name} - ${user.email}`;
+//  const deleteButton = document.createElement('button');
+//  deleteButton.textContent = 'Delete';
+//  deleteButton.addEventListener('click', () => {
+//  deleteUser(user._id);
+//  });
+//  li.appendChild(deleteButton);
+//  userList.appendChild(li);
+// });
+//  })
+//  .catch(error => {
+// console.error('Error fetching users:', error);
+// });
+// };
+// const deleteUser = userId => {
+//  fetch(`/users/${userId}`, {
+//  method: 'DELETE'
+//  })
+//  .then(response => {
+//  if (!response.ok) {
+//  throw new Error('Network response was not ok');
+//  }
+//  return response.json();
+//  })
+//  .then(() => {
+//  fetchUsers(); // Refresh user list after deletion
+//  })
+//  .catch(error => {
+//  console.error('Error deleting user:', error);
+//  });
+// };
+// document.getElementById('addUserForm').addEventListener('submit', event => {
+//  event.preventDefault();
+//  const formData = new FormData(event.target);
+//  const newUser = {};
+//  formData.forEach((value, key) => {
+//  newUser[key] = value;
+//  });
+
+//  fetch('/users', {
+//  method: 'POST',
+//  headers: {
+//  'Content-Type': 'application/json'
+//  },
+//  body: JSON.stringify(newUser)
+//  })
+//  .then(response => {
+//  if (!response.ok) {
+//  throw new Error('Network response was not ok');
+//  }
+//  return response.json();
+//  })
+// .then(() => {
+//  fetchUsers(); // Refresh user list after addition
+//  document.getElementById('addUserForm').reset(); // Reset form fields
+//  })
+//  .catch(error => {
+//  console.error('Error adding user:', error);
+// });
+//  });
+
+//  // Calling fetch User as soon as page loads
+//  window.onload = fetchUsers;
+// </script>
+// </body>
+// </html>
+
+
+
+// mongodb(js)-------
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const app = express();
+// const PORT = 3002;
+// // Middleware
+// app.use(express.json());
+
+
+// // Connect to MongoDB
+// mongoose.connect('mongodb://127.0.0.1:27017/user_management_db')
+//     .then(() => console.log('Connected to MongoDB'))
+//     .catch(err => console.error('Error connecting to MongoDB:', err));
+
+// // Define User schema
+// const userSchema = new mongoose.Schema({
+//     name: String,
+//     email: String,
+//     password: String
+//     });
+//     const User = mongoose.model('User', userSchema);
+    
+
+//     app.get('/users', (req, res) => {
+//          User.find({})
+//          .then(users => res.json(users))
+//          .catch(err => res.status(500).json({ message: err.message }));
+//         });
+
+//         app.post('/users', (req, res) => {
+//              const user = new User({
+//              name: req.body.name,
+//              email: req.body.email,
+//              password: req.body.password
+//              });
+//              user.save()
+//              .then(newUser => res.status(201).json(newUser))
+//              .catch(err => res.status(400).json({ message: err.message }));
+//             });
+
+//             app.put('/users/:id', (req, res) => {
+//                 const userId = req.params.id;
+//                 const updateData = {
+//                 name: req.body.name,
+//                 email: req.body.email,
+//                 password: req.body.password
+//                 };
+               
+               
+               
+//                 User.findByIdAndUpdate(userId, updateData, { new: true })
+               
+//                .then(updatedUser => {
+//                if (!updatedUser) {
+//                 return res.status(404).json({ message: 'User not found' });
+//                 }
+//                 res.json(updatedUser);
+//                 })
+//                 .catch(err => res.status(400).json({ message: err.message }));
+//                });
+                
+
+//                app.delete('/users/:id', (req, res) => {
+//                  const userId = req.params.id;
+                 
+//                  User.findByIdAndDelete(userId)
+//                  .then(deletedUser => {
+//                  if (!deletedUser) {
+//                  return res.status(404).json({ message: 'User not found' });
+//                  }
+//                  res.json({ message: 'User deleted successfully' });
+//                  })
+//                  .catch(err => res.status(400).json({ message: err.message }));
+//                  });
+                
+            
+        
