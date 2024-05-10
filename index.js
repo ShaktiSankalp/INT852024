@@ -1,3 +1,4 @@
+//app.use(express.static(path.join(__dirname)))  //serve static file in socket.io
 
 
 
@@ -37,8 +38,7 @@
 
 
 
-
-
+// https://github.com/thisiskshitij/lab.git
 // Socket.io(html)---------------------------------
 // <!DOCTYPE html>
 // <html lang="en">
